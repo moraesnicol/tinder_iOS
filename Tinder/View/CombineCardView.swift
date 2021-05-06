@@ -1,9 +1,4 @@
-//
-//  CombineCardView.swift
-//  Tinder
-//
-//  Created by Gabriel on 05/05/21.
-//
+
 
 import UIKit
 
