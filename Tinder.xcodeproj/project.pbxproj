@@ -14,6 +14,7 @@
 		C0FD271826423020001D97F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0FD271726423020001D97F6 /* Assets.xcassets */; };
 		C0FD271B26423020001D97F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0FD271926423020001D97F6 /* LaunchScreen.storyboard */; };
 		C0FD272426423348001D97F6 /* CombineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FD272326423348001D97F6 /* CombineVC.swift */; };
+		C0FD2728264379AB001D97F6 /* CombineCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FD2727264379AB001D97F6 /* CombineCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		C0FD271A26423020001D97F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0FD271C26423020001D97F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0FD272326423348001D97F6 /* CombineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineVC.swift; sourceTree = "<group>"; };
+		C0FD2727264379AB001D97F6 /* CombineCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		C0FD270D26423020001D97F6 /* Tinder */ = {
 			isa = PBXGroup;
 			children = (
+				C0FD272626437982001D97F6 /* View */,
 				C0FD27222642330D001D97F6 /* Controller */,
 				C0FD270E26423020001D97F6 /* AppDelegate.swift */,
 				C0FD271026423020001D97F6 /* SceneDelegate.swift */,
@@ -76,6 +79,14 @@
 				C0FD272326423348001D97F6 /* CombineVC.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		C0FD272626437982001D97F6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C0FD2727264379AB001D97F6 /* CombineCardView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +161,7 @@
 			files = (
 				C0FD272426423348001D97F6 /* CombineVC.swift in Sources */,
 				C0FD271326423020001D97F6 /* ViewController.swift in Sources */,
+				C0FD2728264379AB001D97F6 /* CombineCardView.swift in Sources */,
 				C0FD270F26423020001D97F6 /* AppDelegate.swift in Sources */,
 				C0FD271126423020001D97F6 /* SceneDelegate.swift in Sources */,
 			);
