@@ -4,16 +4,27 @@ import UIKit
 
 class CombineCardView: UIView {
     
-    let fotoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "VEmG7")
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        return imageView
-    }()
     
-    let especieLabel: UILabel = .textBoldLabel(20, textColor: .darkGray, numberOflines: 2)
-    let poderLabel: UILabel = .textBoldLabel(20, textColor: .darkGray, numberOflines: 2)
+    var usuario: Usuario? {
+      didSet  {
+        if let usuario = usuario {
+            fotoImageView.image = UIImage(named: usuario.foto)
+            especieLabel.text = usuario.especie
+            poderLabel.text = String(usuario.poder)
+            fraseLabel.text = usuario.frase
+           }
+        }
+    }
+    
+    let fotoImageView: UIImageView = .fotoImageView()
+    
+    let especieLabel: UILabel = .textBoldLabel(20, textColor: .darkGray, numberOflines: 1)
+    let poderLabel: UILabel = .textBoldLabel(20, textColor: .purple, numberOflines: 1)
+    let fraseLabel: UILabel = .textBoldLabel(16, textColor: .darkGray, numberOflines: 2)
+
+    
+    let deslikeImageView: UIImageView = .iconCard(named: "card-deslike")
+    let likeImageView: UIImageView = .iconCard(named: "card-like")
     
     
     override init(frame: CGRect) {
@@ -24,21 +35,34 @@ class CombineCardView: UIView {
         layer.cornerRadius = 8
         clipsToBounds = true
         
-        
-        especieLabel.text = "Espécie: Humano "
-        poderLabel.text = "Poder: 25"
-        
         especieLabel.adicionaShadow()
         poderLabel.adicionaShadow()
-        
+        fraseLabel.adicionaShadow()
         
         
         addSubview(fotoImageView)
         
-        fotoImageView.preencherSuperview()
+        addSubview(deslikeImageView)
+        deslikeImageView.preencher(
+            top: topAnchor,
+            leading: nil,
+            trailing: trailingAnchor,
+            bottom: nil,
+            padding: .init(top: 20, left: 0, bottom: 0, right: 20)
+        )
         
-        let stackView = UIStackView(arrangedSubviews: [especieLabel, poderLabel, UIView()])
-        stackView.spacing = 12
+        addSubview(likeImageView)
+        likeImageView.preencher(
+            top: topAnchor,
+            leading: leadingAnchor,
+            trailing: nil,
+            bottom: nil,
+            padding: .init(top: 20, left: 20, bottom: 0, right: 0)
+        )
+                fotoImageView.preencherSuperview()
+        
+        let stackView = UIStackView(arrangedSubviews: [especieLabel, poderLabel,  fraseLabel])
+        stackView.spacing = 5
         stackView.distribution = .fillProportionally
         stackView.axis = .vertical
         stackView.alignment = .center
