@@ -7,18 +7,31 @@
 
 import UIKit
 
-class CombineVc: UIViewController {
+enum Acao {
+    case deslike
+    case like
+}
+
+class CombineVC: UIViewController {
     
+    var perfilButton: UIButton = .iconMenu(named: "icone-perfil")
+    var chatButton: UIButton = .iconMenu(named: "icone-chat")
+    var logoButton: UIButton = .iconMenu(named: "icone-logo")
+    
+    var deslikeButton: UIButton = .iconFooter(named: "icone-deslike")
+    var superlikeButton: UIButton = .iconFooter(named: "icone-superlike")
+    var likeButton: UIButton = .iconFooter(named: "icone-like")
     
     var usuarios: [Usuario] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor.systemGroupedBackground
     
-    
-        self.adicionarCards()
+        self.adicionaHeader()
+        self.adicionarFooter()
         self.buscaUsuarios()
     }
     
@@ -30,7 +43,56 @@ class CombineVc: UIViewController {
     
 }
 
-extension CombineVc {
+extension CombineVC {
+    
+    func adicionaHeader () {
+        
+        let window = UIApplication.shared.windows.first  { $0.isKeyWindow }
+        let top: CGFloat = window?.safeAreaInsets.top ?? 44
+        
+        let stackView = UIStackView(arrangedSubviews: [perfilButton, logoButton, chatButton])
+        stackView.distribution = .equalCentering
+        
+        view.addSubview(stackView)
+        stackView.preencher(
+            top: view.topAnchor,
+            leading: view.leadingAnchor,
+            trailing: view.trailingAnchor,
+            bottom: nil,
+            padding: .init(top: top, left: 16, bottom: 0, right: 16)
+        )
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func adicionarFooter () {
+     let stackView = UIStackView(arrangedSubviews: [UIView(), deslikeButton, superlikeButton, likeButton, UIView()])
+        stackView.distribution = .equalCentering
+        
+        view.addSubview(stackView)
+        stackView.preencher(
+            top: nil,
+            leading: view.leadingAnchor,
+            trailing: view.trailingAnchor,
+            bottom: view.bottomAnchor,
+            padding: .init(top: 0, left: 16, bottom: 34, right: 16)
+        )
+    }
+}
+
+
+
+
+
+
+
+extension CombineVC {
     func adicionarCards () {
         
         for usuario in usuarios {
@@ -49,13 +111,19 @@ extension CombineVc {
                 
             view.insertSubview(card, at: 0)
         }
+    }
+    func removeCard (card: UIView) {
+        card.removeFromSuperview()
         
+        self.usuarios = self.usuarios.filter({ (usuario) -> Bool in
+            return usuario.id != card.tag
+        })
         
         
     }
 }
 
-extension CombineVc {
+extension CombineVC {
     @objc func handlerCard ( gesture: UIPanGestureRecognizer ) {
         if let card = gesture.view as? CombineCardView {
             let point = gesture.translation(in: view)
@@ -79,7 +147,22 @@ extension CombineVc {
             
             card.transform = CGAffineTransform(rotationAngle: rotationAngle)
             
+            
             if gesture.state == .ended {
+                
+                
+                if card.center.x > self.view.bounds.width + 50 {
+                    print("like")
+                    self.animarCard(rotationAngle: rotationAngle, acao: .like)
+                    return
+                }
+                
+                if card.center.x < -50 {
+                    print("deslike")
+                    self.animarCard(rotationAngle: rotationAngle, acao: .deslike)
+                    return
+                }
+                
                 
                 UIView.animate(withDuration: 0.2) {
                 card.center = self.view.center
@@ -91,5 +174,35 @@ extension CombineVc {
         }
     }
 }
-
+    func animarCard (rotationAngle: CGFloat, acao: Acao) {
+        if let usuario = self.usuarios.first {
+            for view in self.view.subviews {
+                if view.tag == usuario.id {
+                    if let card = view as? CombineCardView {
+                       
+                        let  center: CGPoint
+                        
+                        switch acao {
+                        case .deslike:
+                            center = CGPoint(x: card.center.x - self.view.bounds.width, y: card.center.y + 50)
+                        case .like:
+                            center = CGPoint(x: card.center.x + self.view.bounds.width, y: card.center.y + 50)
+                       
+                        }
+   //                         UIView.animate(withDuration: 0.2){
+   //                         card.center = center
+   //                         card.transform = CGAffineTransform(rotationAngle: rotationAngle)
+   //                     }
+                        UIView.animate(withDuration: 0.2, animations: {
+                            card.center = center
+                            card.transform = CGAffineTransform(rotationAngle: rotationAngle)
+                        }) { (_) in
+                            self.removeCard(card: card)
+                        }
+            }
+        }
+        
+    }
+}
+}
 }
