@@ -3,7 +3,7 @@
 
          
 <p align="center">
-   <img src="https://swift.org/" alt="swift" width="300"/>
+   <img src="https://github.com/moraesnicol/tinder_iOS/blob/main/swift.jpeg" alt="swift" width="300"/>
 </p>
 
 <p align="center">
