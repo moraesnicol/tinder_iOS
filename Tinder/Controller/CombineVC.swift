@@ -31,6 +31,11 @@ class CombineVC: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor.systemGroupedBackground
     
+        
+        let loading  = Loading(frame: view.frame)
+        view.insertSubview(loading, at: 0)
+        
+        
         self.adicionaHeader()
         self.adicionarFooter()
         self.buscaUsuarios()
@@ -118,7 +123,7 @@ extension CombineVC {
                 
                 card.addGestureRecognizer(gesture)
                 
-            view.insertSubview(card, at: 0)
+            view.insertSubview(card, at: 1)
         }
     }
     func removeCard (card: UIView) {
@@ -226,10 +231,7 @@ extension CombineVC {
                             
                         
                         }
-   //                         UIView.animate(withDuration: 0.2){
-   //                         card.center = center
-   //                         card.transform = CGAffineTransform(rotationAngle: rotationAngle)
-   //                     }
+   
                         UIView.animate(withDuration: 0.3, animations: {
                             card.center = center
                             card.transform = CGAffineTransform(rotationAngle: rotationAngle)
