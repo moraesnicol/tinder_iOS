@@ -36,7 +36,7 @@ An iOS App for to easily exchange cards.
 
 # :camera: Screenshots
 <div align="center">
-   <img src="https://github.com/moraesnicol/DogDog/blob/master/dogdog.gif" height="550px" width="300px">
+   <img src="https://github.com/moraesnicol/tinder_iOS/blob/main/tindercards.gif" height="550px" width="300px">
 
 </div>
 
