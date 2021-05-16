@@ -83,6 +83,11 @@ extension CombineVC {
             bottom: view.bottomAnchor,
             padding: .init(top: 0, left: 16, bottom: 34, right: 16)
         )
+        
+        
+        deslikeButton.addTarget(self, action: #selector(deslikeClique), for: .touchUpInside)
+        
+        
     }
 }
 
@@ -174,6 +179,10 @@ extension CombineVC {
         }
     }
 }
+    @objc func deslikeClique () {
+        print("deslike")
+    }
+    
     func animarCard (rotationAngle: CGFloat, acao: Acao) {
         if let usuario = self.usuarios.first {
             for view in self.view.subviews {
