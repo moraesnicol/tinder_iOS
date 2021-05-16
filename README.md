@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  :heavy_check_mark: See a Dog
+  :heavy_check_mark: Exchange cards
 </p>
 
 <hr />
@@ -26,6 +26,7 @@
 
 # :coffee: About
 
+An iOS App for to easily exchange cards 
 This project was made with Uikit && Autolayout
 
 # 📌 Contents
