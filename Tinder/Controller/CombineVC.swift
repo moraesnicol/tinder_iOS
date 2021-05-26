@@ -42,8 +42,19 @@ class CombineVC: UIViewController {
     }
     
     func buscaUsuarios () {
-        self.usuarios = UsuarioService.shared.buscaUsuarios()
-        self.adicionarCards()
+//        self.usuarios = UsuarioService.shared.buscaUsuarios()
+//        self.adicionarCards()
+        
+        UsuarioService.shared.buscaUsuarios { (usuarios, error) in
+                if let usuarios = usuarios {
+                    DispatchQueue.main.async {
+                        self.usuarios = usuarios
+                        self.adicionarCards()
+                    }
+                }
+                
+                
+            }
         
     }
     
@@ -138,6 +149,10 @@ extension CombineVC {
     func verificarMatch (usuario: Usuario) {
         if usuario.match {
             print("wowww")
+            
+            let matchVC = UIViewController()
+            matchVC.view.backgroundColor = UIColor.green
+            self.present(matchVC, animated: true, completion: nil)
         }
     }
 }
