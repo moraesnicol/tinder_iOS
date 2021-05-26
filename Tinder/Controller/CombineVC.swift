@@ -150,8 +150,9 @@ extension CombineVC {
         if usuario.match {
             print("wowww")
             
-            let matchVC = UIViewController()
-            matchVC.view.backgroundColor = UIColor.green
+            let matchVC = MatchVC()
+            matchVC.modalPresentationStyle = .fullScreen
+            
             self.present(matchVC, animated: true, completion: nil)
         }
     }
