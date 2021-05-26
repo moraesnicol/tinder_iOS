@@ -11,6 +11,17 @@ import UIKit
 
 class MatchVC: UIViewController {
     
+    var usuario: Usuario? {
+        didSet {
+            if let usuario = usuario {
+                fotoImageView.image = UIImage(named: usuario.foto)
+                mensagemLabel.text = "\(usuario.owner) também curtiu sua carta"
+                    
+            }
+        }
+    }
+    
+    
     let fotoImageView: UIImageView = .fotoImageView(named: "char5" )
     let likeImageView: UIImageView = .fotoImageView(named: "icone-like")
     let mensagemLabel: UILabel = .textBoldLabel(18, textColor: .purple, numberOflines: 2)
@@ -64,10 +75,24 @@ class MatchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        view.addSubview(fotoImageView)
+        fotoImageView.preencherSuperview()
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = view.frame
+        gradient.colors = [UIColor.clear.cgColor, UIColor.clear.cgColor, UIColor.red ]
+        
+        fotoImageView.layer.addSublayer(gradient)
+        
 
-        mensagemLabel.text = "O dono(a) dessa carta também gostou da sua!"
+    
         mensagemLabel.textAlignment = .center
         mensagemLabel.adicionaShadow()
+        
+        voltarButton.addTarget(self, action: #selector(voltarClique), for: .touchUpInside)
         
         
         
@@ -85,10 +110,9 @@ class MatchVC: UIViewController {
         )
         
         
-        view.addSubview(fotoImageView)
-        fotoImageView.preencherSuperview()
+   
         
-        let stackView = UIStackView(arrangedSubviews: [   UIView(), likeImageView, UIView(), UIView(), UIView(), UIView(),  mensagemLabel, mensagemTxt, voltarButton])
+        let stackView = UIStackView(arrangedSubviews: [   UIView(), likeImageView, UIView(), UIView(), UIView(), UIView(), UIView(),  mensagemLabel, mensagemTxt, voltarButton])
         stackView.axis = .vertical
         stackView.spacing = 16
         
@@ -104,4 +128,46 @@ class MatchVC: UIViewController {
         
     
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    @objc func voltarClique () {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @objc func keyboardShow (notification: NSNotification ) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if let duracao = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
+                UIView.animate(withDuration: duracao) {
+                    self.view.frame = CGRect(
+                        x: self.view.frame.origin.x,
+                        y: self.view.frame.origin.y,
+                        width: self.view.frame.width,
+                        height: self.view.frame.height - keyboardSize.height
+                    )
+                    self.view.layoutIfNeeded()
+                }
+            }
+        }
+        
+    }
+    
+    
+    
+    @objc func keyboardHide (notification: NSNotification ) {
+        if let duracao = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
+            UIView.animate(withDuration: duracao) {
+                
+                self.view.frame = UIScreen.main.bounds
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    
+    
+    
 }

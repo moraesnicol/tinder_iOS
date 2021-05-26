@@ -15,4 +15,5 @@ struct Usuario {
     let match: Bool
     let frase: String
     let foto: String
+    let owner: String
 }
